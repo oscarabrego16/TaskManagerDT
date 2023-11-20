@@ -1,4 +1,10 @@
 package com.rodriguezlazo.tasksmanager.services;
 
-public interface UserService {
+
+import com.rodriguezlazo.tasksmanager.dtos.NewUserDTO;
+import com.rodriguezlazo.tasksmanager.entities.User;
+
+public interface UserService extends GenericService<User, NewUserDTO> {
+    User findOneByUsername(String username);
+
 }
