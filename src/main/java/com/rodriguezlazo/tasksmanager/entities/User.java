@@ -1,6 +1,7 @@
 package com.rodriguezlazo.tasksmanager.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,12 +15,14 @@ public class User {
     private Long id;
     private String name;
     private String lastname;
+    @Column(unique = true)
     private String username;
     private String password;
 
     private static final long serialVersionUID=1L;
 
     @OneToMany(mappedBy = "dueno", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Project> projects;
 
     public User() {

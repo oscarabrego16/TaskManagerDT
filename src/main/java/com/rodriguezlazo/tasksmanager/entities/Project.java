@@ -18,7 +18,7 @@ public class Project {
     private String description;
     private Date startDate;
     private Date endDate;
-    @ManyToOne( fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne( fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="dueno")
     private User dueno;
 

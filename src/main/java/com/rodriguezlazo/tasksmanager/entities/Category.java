@@ -12,6 +12,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long category_id;
+    @Column(unique = true)
     private String name;
     @OneToMany(mappedBy = "taskCategory", fetch = FetchType.LAZY)
     private List<Task> tasks;
@@ -19,6 +20,10 @@ public class Category {
 
     public Category() {
 
+    }
+
+    public Category(String name) {
+        this.name = name;
     }
 
     public Long getCategory_id() {
