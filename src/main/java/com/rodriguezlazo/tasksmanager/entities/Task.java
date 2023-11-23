@@ -29,9 +29,9 @@ public class Task {
     @JoinColumn(name="label_id")
     private TaskLabel taskLabel;
     @Enumerated(EnumType.STRING)
-    private Priority taskPriority;
+    private TaskPriority taskPriority;
     @Enumerated(EnumType.STRING)
-    private Status taskStatus;
+    private TaskStatus taskStatus;
     @ManyToOne( fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="category_id")
     private Category taskCategory;
