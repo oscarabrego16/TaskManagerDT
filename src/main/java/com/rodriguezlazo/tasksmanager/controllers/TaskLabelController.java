@@ -1,10 +1,8 @@
 package com.rodriguezlazo.tasksmanager.controllers;
 
-import com.rodriguezlazo.tasksmanager.dtos.NewCategoryDTO;
-import com.rodriguezlazo.tasksmanager.dtos.NewUserDTO;
-import com.rodriguezlazo.tasksmanager.entities.Category;
-import com.rodriguezlazo.tasksmanager.entities.User;
-import com.rodriguezlazo.tasksmanager.services.CategoryService;
+import com.rodriguezlazo.tasksmanager.dtos.NewTaskLabelDTO;
+import com.rodriguezlazo.tasksmanager.entities.TaskLabel;
+import com.rodriguezlazo.tasksmanager.services.TaskLabelService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,17 +13,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/category")
-public class CategoryController {
+@RequestMapping("/tasklabel")
+public class TaskLabelController
+{
     @Autowired
-    private CategoryService categoryService;
+    private TaskLabelService taskLabelService;
 
     @GetMapping("")
     public ResponseEntity<?> findAll(){
         try {
-            List<Category> categories =(List<Category>) categoryService.findAll();
+            List<TaskLabel> taskLabels =(List<TaskLabel>) taskLabelService.findAll();
             return new ResponseEntity<>(
-                    categories,
+                    taskLabels,
                     HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(
@@ -35,21 +34,21 @@ public class CategoryController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> registerCategory(@Valid @RequestBody NewCategoryDTO categoryDTO, BindingResult bindingResult){
+    public ResponseEntity<?> registerTaskLabel(@Valid @RequestBody NewTaskLabelDTO taskLabelDTO, BindingResult bindingResult){
         try {
             if(bindingResult.hasErrors()){
                 String errors = bindingResult.getAllErrors().toString();
                 return new ResponseEntity<>("Errores en validacion: "+ errors, HttpStatus.BAD_REQUEST);
             }
-            Category foundCategory = categoryService.findOneByName(categoryDTO.getName());
-            if(foundCategory !=null){
+            TaskLabel foundLabel = taskLabelService.findOneByName(taskLabelDTO.getName());
+            if(foundLabel !=null){
                 return new ResponseEntity<>("Esta categoria ya existe", HttpStatus.BAD_REQUEST);
             }
 
             //userService.save();
-            categoryService.save(categoryDTO);
+            taskLabelService.save(taskLabelDTO);
             return new ResponseEntity<>(
-                    "Categoria registrada",
+                    "TaskLabel registrada",
                     HttpStatus.CREATED);
 
         }catch (Exception e){
@@ -59,4 +58,5 @@ public class CategoryController {
         }
 
     }
+
 }
