@@ -59,5 +59,9 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteUserById(){
+
+    }
 
 }

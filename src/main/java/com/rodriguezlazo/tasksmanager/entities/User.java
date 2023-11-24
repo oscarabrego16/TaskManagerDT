@@ -21,7 +21,7 @@ public class User {
 
     private static final long serialVersionUID=1L;
 
-    @OneToMany(mappedBy = "dueno", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "dueno", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Project> projects;
 
