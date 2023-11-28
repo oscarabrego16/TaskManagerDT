@@ -61,7 +61,9 @@ public class UserController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteUserById(){
-
+        return new ResponseEntity<>(
+                "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
+        );
     }
 
 }
