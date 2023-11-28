@@ -6,4 +6,5 @@ import com.rodriguezlazo.tasksmanager.entities.Task;
 
 public interface AttachmentService extends GenericService<Attachment, NewAttachmentDTO> {
     Attachment saveAttachment(NewAttachmentDTO dto, Task task);
+
 }
