@@ -40,6 +40,16 @@ public class Project {
         this.endDate = endDate;
     }
 
+    public Project(String name, String description, Date startDate, Date endDate, User user) {
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.dueno = user;
+    }
+
+
+
     public Long getProject_id() {
         return project_id;
     }
@@ -86,5 +96,18 @@ public class Project {
 
     public void setDueno(User dueno) {
         this.dueno = dueno;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "project_id=" + project_id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", dueno=" + dueno +
+                ", tasks=" + tasks +
+                '}';
     }
 }

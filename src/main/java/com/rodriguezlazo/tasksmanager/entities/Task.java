@@ -50,6 +50,7 @@ public class Task {
         this.taskCategory = taskCategory;
     }
 
+
     public Task() {
     }
 
@@ -139,5 +140,22 @@ public class Task {
 
     public void setTaskCategory(Category taskCategory) {
         this.taskCategory = taskCategory;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", due_date=" + due_date +
+                ", project=" + project +
+                ", attachments=" + attachments +
+                ", comments=" + comments +
+                ", taskLabel=" + taskLabel +
+                ", taskPriority=" + taskPriority +
+                ", taskStatus=" + taskStatus +
+                ", taskCategory=" + taskCategory +
+                '}';
     }
 }

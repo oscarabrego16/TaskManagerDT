@@ -18,6 +18,7 @@ class UserRepositoryTest {
 //given
         User user01= new User("OscarTest", "RodriguezTest", "oscarrodtest", "Passstest");
         userRepository.save(user01);
+
 //when
         String username= "oscarrodtest";
         User expected =userRepository.findUserByUsername(username);
