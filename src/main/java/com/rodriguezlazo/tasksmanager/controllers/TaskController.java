@@ -1,5 +1,6 @@
 package com.rodriguezlazo.tasksmanager.controllers;
 
+
 import com.rodriguezlazo.tasksmanager.dtos.NewProjectDTO;
 import com.rodriguezlazo.tasksmanager.dtos.NewTaskDTO;
 import com.rodriguezlazo.tasksmanager.entities.*;
@@ -64,7 +65,7 @@ public class TaskController {
             }
             Optional<Project> foundProject = projectService.findById(taskDTO.getProject_id());
 
-            if(foundProject ==null){
+            if(foundProject.isEmpty()){
                 return new ResponseEntity<>("El proyecto para la tarea no existe", HttpStatus.BAD_REQUEST);
             }
 
@@ -108,9 +109,6 @@ public class TaskController {
                     return new ResponseEntity<>("La prioridad para la tarea no existe", HttpStatus.BAD_REQUEST);
             }
 
-
-            //priority = taskDTO.getPriority();
-
             if(status ==null){
                 return new ResponseEntity<>("El status no existe", HttpStatus.BAD_REQUEST);
             }
@@ -131,6 +129,5 @@ public class TaskController {
         }
 
     }
-
 
 }
