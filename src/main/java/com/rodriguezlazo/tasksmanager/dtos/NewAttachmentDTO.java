@@ -1,6 +1,7 @@
 package com.rodriguezlazo.tasksmanager.dtos;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class NewAttachmentDTO {
     @NotBlank
@@ -8,10 +9,10 @@ public class NewAttachmentDTO {
     @NotBlank
     private String file_type;
 
-    @NotBlank
+    @NotNull
     private int file_size;
 
-    @NotBlank
+    @NotNull
     private int task_id;
 
     public NewAttachmentDTO() {
