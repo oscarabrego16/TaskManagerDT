@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/category")
@@ -53,6 +54,24 @@ public class CategoryController {
                     HttpStatus.CREATED);
 
         }catch (Exception e){
+            return new ResponseEntity<>(
+                    "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteCategoryById(@PathVariable(name = "id") Long id){
+        try {
+            Optional<Category> foundCategory = categoryService.findById(id);
+            if (foundCategory.isEmpty()){
+                return new ResponseEntity<>("Categoria no encontrada", HttpStatus.NOT_FOUND);
+            }
+            categoryService.deleteById(foundCategory.get().getCategory_id());
+            return new ResponseEntity<>("Eliminado con exito", HttpStatus.OK);
+
+        }catch (Exception e){
+
             return new ResponseEntity<>(
                     "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
             );

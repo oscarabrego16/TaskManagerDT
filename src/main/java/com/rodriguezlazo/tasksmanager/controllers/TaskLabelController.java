@@ -2,6 +2,7 @@ package com.rodriguezlazo.tasksmanager.controllers;
 
 import com.rodriguezlazo.tasksmanager.dtos.NewTaskLabelDTO;
 import com.rodriguezlazo.tasksmanager.entities.TaskLabel;
+import com.rodriguezlazo.tasksmanager.entities.User;
 import com.rodriguezlazo.tasksmanager.services.TaskLabelService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/tasklabel")
@@ -52,6 +54,24 @@ public class TaskLabelController
                     HttpStatus.CREATED);
 
         }catch (Exception e){
+            return new ResponseEntity<>(
+                    "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteTaskLabelById(@PathVariable(name = "id") Long id){
+        try {
+            Optional<TaskLabel> foundTaskLabel = taskLabelService.findById(id);
+            if (foundTaskLabel.isEmpty()){
+                return new ResponseEntity<>("Label no encontrada", HttpStatus.NOT_FOUND);
+            }
+            taskLabelService.deleteById(foundTaskLabel.get().getLabel_id());
+            return new ResponseEntity<>("Eliminado con exito", HttpStatus.OK);
+
+        }catch (Exception e){
+
             return new ResponseEntity<>(
                     "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
             );

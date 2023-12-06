@@ -23,6 +23,7 @@ public class Project {
     private User dueno;
 
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade =CascadeType.ALL)
+
     private List<Task> tasks;
 
 

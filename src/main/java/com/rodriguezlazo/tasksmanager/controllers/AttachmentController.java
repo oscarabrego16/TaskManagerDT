@@ -4,6 +4,7 @@ package com.rodriguezlazo.tasksmanager.controllers;
 import com.rodriguezlazo.tasksmanager.dtos.NewAttachmentDTO;
 import com.rodriguezlazo.tasksmanager.dtos.NewProjectDTO;
 import com.rodriguezlazo.tasksmanager.entities.Attachment;
+import com.rodriguezlazo.tasksmanager.entities.Comment;
 import com.rodriguezlazo.tasksmanager.entities.Task;
 import com.rodriguezlazo.tasksmanager.services.AttachmentService;
 import com.rodriguezlazo.tasksmanager.services.TaskService;
@@ -15,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/attachment")
@@ -57,6 +59,25 @@ public class AttachmentController {
                     HttpStatus.CREATED);
 
         }catch (Exception e){
+            return new ResponseEntity<>(
+                    "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteAttachmentById(@PathVariable(name = "id") Long id){
+        try {
+            Optional<Attachment> foundAttachment = attachmentService.findById(id);
+            if (foundAttachment.isEmpty()){
+                return new ResponseEntity<>("Adjunto no encontrado", HttpStatus.NOT_FOUND);
+            }
+            attachmentService.deleteById(foundAttachment.get().getId());
+            return new ResponseEntity<>("Eliminado con exito", HttpStatus.OK);
+
+        }catch (Exception e){
+
             return new ResponseEntity<>(
                     "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
             );

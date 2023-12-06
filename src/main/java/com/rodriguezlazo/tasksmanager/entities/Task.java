@@ -1,6 +1,7 @@
 package com.rodriguezlazo.tasksmanager.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -20,14 +21,18 @@ public class Task {
 
     @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(name="project_id")
+    @JsonIgnore
     private Project project;
 
     @OneToMany(mappedBy = "task", fetch = FetchType.LAZY ,cascade =CascadeType.ALL)
+
     private List<Attachment> attachments;
     @OneToMany(mappedBy = "task", fetch = FetchType.LAZY,cascade =CascadeType.ALL)
+    @JsonIgnore
     private List<Comment> comments;
     @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(name="label_id")
+    @JsonIgnore
     private TaskLabel taskLabel;
     @Enumerated(EnumType.STRING)
     private TaskPriority taskPriority;
@@ -35,6 +40,7 @@ public class Task {
     private TaskStatus taskStatus;
     @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(name="category_id")
+    @JsonIgnore
     private Category taskCategory;
 
     public Task(String title, String description, Date due_date, Project project, TaskLabel taskLabel, TaskPriority taskPriority, TaskStatus taskStatus, Category taskCategory) {

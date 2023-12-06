@@ -1,6 +1,7 @@
 package com.rodriguezlazo.tasksmanager.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,7 @@ public class Attachment {
     private int file_size;
     @ManyToOne( fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name="task_id")
+    @JsonIgnore
     private Task task;
 
     public Attachment() {

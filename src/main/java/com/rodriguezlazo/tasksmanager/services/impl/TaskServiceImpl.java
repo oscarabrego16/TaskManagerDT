@@ -27,6 +27,7 @@ public class TaskServiceImpl implements TaskService {
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
         task.setDue_date(dto.getDue_date());
+
         return task;
     }
 
@@ -51,6 +52,7 @@ public class TaskServiceImpl implements TaskService {
         task.setTaskStatus(status);
         task.setTaskLabel(label);
         task.setTaskPriority(priority);
+        taskRepository.save(task);
         return task;
     }
 }

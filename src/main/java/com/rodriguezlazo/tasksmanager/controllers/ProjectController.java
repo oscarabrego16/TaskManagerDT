@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/project")
@@ -59,6 +60,25 @@ public class ProjectController {
                     HttpStatus.CREATED);
 
         }catch (Exception e){
+            return new ResponseEntity<>(
+                    "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteProjectById(@PathVariable(name = "id") Long id){
+        try {
+            Optional<Project> foundProject =projectService.findById(id);
+            if (foundProject.isEmpty()){
+                return new ResponseEntity<>("Proyecto no encontrada", HttpStatus.NOT_FOUND);
+            }
+            projectService.deleteById(foundProject.get().getProject_id());
+            return new ResponseEntity<>("Eliminado con exito", HttpStatus.OK);
+
+        }catch (Exception e){
+
             return new ResponseEntity<>(
                     "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
             );

@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -60,10 +61,22 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteUserById(){
-        return new ResponseEntity<>(
-                "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
-        );
+    public ResponseEntity<?> deleteUserById(@PathVariable(name = "id") Long id){
+        try {
+            Optional<User> foundUser = userService.findById(id);
+            if (foundUser.isEmpty()){
+                return new ResponseEntity<>("Area no encontrada", HttpStatus.NOT_FOUND);
+            }
+            userService.deleteById(foundUser.get().getId());
+            return new ResponseEntity<>("Eliminado con exito", HttpStatus.OK);
+
+        }catch (Exception e){
+
+            return new ResponseEntity<>(
+                    "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+
     }
 
 }

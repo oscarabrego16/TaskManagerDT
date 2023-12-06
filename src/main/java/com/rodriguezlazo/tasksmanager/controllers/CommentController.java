@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/comment")
@@ -54,6 +55,24 @@ public class CommentController {
                     HttpStatus.CREATED);
 
         }catch (Exception e){
+            return new ResponseEntity<>(
+                    "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteCommentById(@PathVariable(name = "id") Long id){
+        try {
+            Optional<Comment> foundComment = commentService.findById(id);
+            if (foundComment.isEmpty()){
+                return new ResponseEntity<>("Comentario no encontrada", HttpStatus.NOT_FOUND);
+            }
+            commentService.deleteById(foundComment.get().getId());
+            return new ResponseEntity<>("Eliminado con exito", HttpStatus.OK);
+
+        }catch (Exception e){
+
             return new ResponseEntity<>(
                     "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
             );

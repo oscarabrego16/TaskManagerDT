@@ -129,5 +129,23 @@ public class TaskController {
         }
 
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteTaskById(@PathVariable(name = "id") Long id){
+        try {
+            Optional<Task> foundTask = taskService.findById(id);
+            if (foundTask.isEmpty()){
+                return new ResponseEntity<>("Tarea no encontrada", HttpStatus.NOT_FOUND);
+            }
+            taskService.deleteById(foundTask.get().getId());
+            return new ResponseEntity<>("Eliminado con exito", HttpStatus.OK);
+
+        }catch (Exception e){
+
+            return new ResponseEntity<>(
+                    "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+
+    }
 
 }
