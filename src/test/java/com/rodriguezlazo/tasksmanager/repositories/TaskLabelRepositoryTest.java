@@ -23,7 +23,7 @@ public class TaskLabelRepositoryTest {
 
 //when
 
-        TaskLabel expected =taskLabelRepository.findTaskLabelByName(labelText);
+        TaskLabel expected =taskLabelRepository.findOneByName(labelText);
         System.out.println(expected.toString());
 //then
         assertThat(expected.getName().equals(labelText)).isTrue();
