@@ -9,9 +9,12 @@ import java.util.Date;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-
 @DataJpaTest
-public class TaskRepositoryTest {
+public class AttachmentRepositoryTest {
+
+    @Autowired
+    AttachmentRepository attachmentRepository;
+
     @Autowired
     ProjectRepository projectRepository;
 
@@ -24,8 +27,9 @@ public class TaskRepositoryTest {
     @Autowired
     UserRepository userRepository;
     @Test
-    void findTaskById() {
-//given
+    void findAttachentbyName() {
+        long idAttachment= 1L;
+
         TaskLabel label= new TaskLabel("parcial final");
         taskLabel.save(label);
         Category category= new Category("UCA");
@@ -37,11 +41,15 @@ public class TaskRepositoryTest {
 
         Task task01 = new Task("Estudiar TEO", "Parcial 2 en proximo viernes", new Date(2023,12,1), project01, label, TaskPriority.HIGH, TaskStatus.TO_DO, category );
         taskRepository.save(task01);
+//given
+        Attachment attachment= new Attachment("prueba.jpe", "JPE", 14, task01);
+        attachmentRepository.save(attachment);
+
 //when
-        Long id = 1L;
-        Task expected =taskRepository.findById(id).get();
+
+        Attachment expected =attachmentRepository.findById(1L).get();
         System.out.println(expected.toString());
 //then
-        assertThat(expected.getId().equals(id)).isTrue();
+        assertThat(expected.getId().equals(idAttachment)).isTrue();
     }
 }

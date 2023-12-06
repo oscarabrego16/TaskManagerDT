@@ -23,6 +23,13 @@ public class Attachment {
 
     }
 
+    public Attachment(String file_name, String file_type, int file_size, Task task) {
+        this.file_name = file_name;
+        this.file_type = file_type;
+        this.file_size = file_size;
+        this.task = task;
+    }
+
     public Long getId() {
         return id;
     }
@@ -61,5 +68,16 @@ public class Attachment {
 
     public void setTask(Task task) {
         this.task = task;
+    }
+
+    @Override
+    public String toString() {
+        return "Attachment{" +
+                "id=" + id +
+                ", file_name='" + file_name + '\'' +
+                ", file_type='" + file_type + '\'' +
+                ", file_size=" + file_size +
+                ", task=" + task +
+                '}';
     }
 }

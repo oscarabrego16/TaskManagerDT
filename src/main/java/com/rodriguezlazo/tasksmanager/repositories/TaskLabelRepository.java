@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TaskLabelRepository extends JpaRepository<TaskLabel,Long> {
-    TaskLabel findCategoryByName(String name);
+    TaskLabel findTaskLabelByName(String name);
 }

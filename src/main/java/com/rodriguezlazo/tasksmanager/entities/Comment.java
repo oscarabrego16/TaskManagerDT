@@ -24,6 +24,12 @@ public class Comment {
 
     }
 
+    public Comment(String content, Date timestamp, Task task) {
+        this.content = content;
+        this.timestamp = timestamp;
+        this.task = task;
+    }
+
     public Long getId() {
         return id;
     }
@@ -54,5 +60,15 @@ public class Comment {
 
     public void setTask(Task task) {
         this.task = task;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", timestamp=" + timestamp +
+                ", task=" + task +
+                '}';
     }
 }

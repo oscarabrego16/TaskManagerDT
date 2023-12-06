@@ -1,5 +1,6 @@
 package com.rodriguezlazo.tasksmanager.repositories;
 
+
 import com.rodriguezlazo.tasksmanager.entities.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,13 @@ import java.util.Date;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-
 @DataJpaTest
-public class TaskRepositoryTest {
+public class CommentRepositoryTest {
+
+
+    @Autowired
+    CommentRepository commentRepository;
+
     @Autowired
     ProjectRepository projectRepository;
 
@@ -24,8 +29,9 @@ public class TaskRepositoryTest {
     @Autowired
     UserRepository userRepository;
     @Test
-    void findTaskById() {
-//given
+    void findAttachentbyName() {
+        long idComment= 1L;
+
         TaskLabel label= new TaskLabel("parcial final");
         taskLabel.save(label);
         Category category= new Category("UCA");
@@ -37,11 +43,16 @@ public class TaskRepositoryTest {
 
         Task task01 = new Task("Estudiar TEO", "Parcial 2 en proximo viernes", new Date(2023,12,1), project01, label, TaskPriority.HIGH, TaskStatus.TO_DO, category );
         taskRepository.save(task01);
+//given
+        Comment comment= new Comment("Hola, que tal este es un comentario", new Date(), task01);
+        commentRepository.save(comment);
+
 //when
-        Long id = 1L;
-        Task expected =taskRepository.findById(id).get();
+
+        Comment expected =commentRepository.findById(1L).get();
         System.out.println(expected.toString());
 //then
-        assertThat(expected.getId().equals(id)).isTrue();
+        assertThat(expected.getId().equals(idComment)).isTrue();
     }
+
 }

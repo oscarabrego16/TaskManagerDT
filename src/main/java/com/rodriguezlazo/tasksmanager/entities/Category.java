@@ -49,4 +49,13 @@ public class Category {
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "category_id=" + category_id +
+                ", name='" + name + '\'' +
+                ", tasks=" + tasks +
+                '}';
+    }
 }

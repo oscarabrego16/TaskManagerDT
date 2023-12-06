@@ -41,6 +41,6 @@ public class TaskLabelServiceImpl implements TaskLabelService {
 
     @Override
     public TaskLabel findOneByName(String name) {
-        return repository.findCategoryByName(name);
+        return repository.findTaskLabelByName(name);
     }
 }

@@ -48,4 +48,13 @@ public class TaskLabel {
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
+
+    @Override
+    public String toString() {
+        return "TaskLabel{" +
+                "label_id=" + label_id +
+                ", name='" + name + '\'' +
+                ", tasks=" + tasks +
+                '}';
+    }
 }
