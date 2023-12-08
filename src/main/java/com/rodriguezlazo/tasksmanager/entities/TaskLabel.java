@@ -14,7 +14,8 @@ public class TaskLabel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long label_id;
     private String name;
-    @OneToMany(mappedBy = "taskLabel", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "taskLabel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
     private List<Task>tasks;
 
     public TaskLabel(String name) {

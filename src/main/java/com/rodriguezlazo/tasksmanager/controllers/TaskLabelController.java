@@ -1,6 +1,9 @@
 package com.rodriguezlazo.tasksmanager.controllers;
 
+import com.rodriguezlazo.tasksmanager.dtos.ModifyTaskLabelDTO;
+import com.rodriguezlazo.tasksmanager.dtos.ModifyUserDTO;
 import com.rodriguezlazo.tasksmanager.dtos.NewTaskLabelDTO;
+import com.rodriguezlazo.tasksmanager.entities.Task;
 import com.rodriguezlazo.tasksmanager.entities.TaskLabel;
 import com.rodriguezlazo.tasksmanager.entities.User;
 import com.rodriguezlazo.tasksmanager.services.TaskLabelService;
@@ -36,7 +39,8 @@ public class TaskLabelController
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> registerTaskLabel(@Valid @RequestBody NewTaskLabelDTO taskLabelDTO, BindingResult bindingResult){
+    public ResponseEntity<?
+            > registerTaskLabel(@Valid @RequestBody NewTaskLabelDTO taskLabelDTO, BindingResult bindingResult){
         try {
             if(bindingResult.hasErrors()){
                 String errors = bindingResult.getAllErrors().toString();
@@ -76,7 +80,32 @@ public class TaskLabelController
                     "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
             );
         }
+    }
 
+    @PutMapping("/modify")
+    public ResponseEntity<?> modifyTaskLabelById(@Valid @RequestBody ModifyTaskLabelDTO labelInfo, BindingResult bindingResult){
+        try {
+            if(bindingResult.hasErrors()){
+                String errors = bindingResult.getAllErrors().toString();
+                return new ResponseEntity<>("Errores en validacion: "+ errors, HttpStatus.BAD_REQUEST);
+            }
+
+            Optional<TaskLabel> foundTaskLabel = taskLabelService.findById(labelInfo.getLabel_id()); //implementar el id en un nuevo dto
+            if (foundTaskLabel.isEmpty()){
+                return new ResponseEntity<>("Label no encontrado", HttpStatus.NOT_FOUND);
+            }
+            TaskLabel foundLabel2 = taskLabelService.findOneByName(labelInfo.getName()); //implementar el id en un nuevo dto
+            if(foundLabel2 !=null){
+                return new ResponseEntity<>("Nombre de de label ya registrado", HttpStatus.CONFLICT);
+            }
+
+            taskLabelService.modifyById(labelInfo);
+            return new ResponseEntity<>("Modificado con exito", HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(
+                    "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
     }
 
 }

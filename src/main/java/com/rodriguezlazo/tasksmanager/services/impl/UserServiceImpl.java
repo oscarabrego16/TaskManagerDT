@@ -1,5 +1,6 @@
 package com.rodriguezlazo.tasksmanager.services.impl;
 
+import com.rodriguezlazo.tasksmanager.dtos.ModifyUserDTO;
 import com.rodriguezlazo.tasksmanager.dtos.NewUserDTO;
 import com.rodriguezlazo.tasksmanager.entities.User;
 import com.rodriguezlazo.tasksmanager.repositories.UserRepository;
@@ -46,4 +47,18 @@ public class UserServiceImpl implements UserService {
     public User findOneByUsername(String username) {
         return repository.findUserByUsername(username);
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public User modifyUserById(ModifyUserDTO newUserDTO) {
+        Optional<User> user;
+        user = repository.findById(newUserDTO.getId());
+        user.get().setName(newUserDTO.getName());
+        user.get().setLastname(newUserDTO.getLastname());
+        user.get().setPassword(newUserDTO.getPassword());
+        user.get().setUsername(newUserDTO.getUsername());
+        return repository.save(user.get());
+    }
+
+
 }

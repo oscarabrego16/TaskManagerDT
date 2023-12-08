@@ -1,6 +1,7 @@
 package com.rodriguezlazo.tasksmanager.controllers;
 
 
+import com.rodriguezlazo.tasksmanager.dtos.ModifyUserDTO;
 import com.rodriguezlazo.tasksmanager.dtos.NewUserDTO;
 import com.rodriguezlazo.tasksmanager.entities.User;
 import com.rodriguezlazo.tasksmanager.services.UserService;
@@ -77,6 +78,32 @@ public class UserController {
             );
         }
 
+    }
+
+    @PutMapping("/modify")
+    public ResponseEntity<?> modifyUserById(@Valid @RequestBody ModifyUserDTO userinfo, BindingResult bindingResult){
+        try {
+            if(bindingResult.hasErrors()){
+                String errors = bindingResult.getAllErrors().toString();
+                return new ResponseEntity<>("Errores en validacion: "+ errors, HttpStatus.BAD_REQUEST);
+            }
+
+            Optional<User> foundUser = userService.findById(userinfo.getId()); //implementar el id en un nuevo dto
+            if (foundUser.isEmpty()){
+                return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
+            }
+            User foundUser2 = userService.findOneByUsername(userinfo.getUsername()); //implementar el id en un nuevo dto
+            if(foundUser2 !=null){
+                return new ResponseEntity<>("Nombre de usuario registrado", HttpStatus.CONFLICT);
+            }
+
+            userService.modifyUserById(userinfo);
+            return new ResponseEntity<>("Modificado con exito", HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(
+                    "Error interno", HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
     }
 
 }

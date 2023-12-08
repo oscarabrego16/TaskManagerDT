@@ -1,5 +1,6 @@
 package com.rodriguezlazo.tasksmanager.services.impl;
 
+import com.rodriguezlazo.tasksmanager.dtos.ModifyTaskLabelDTO;
 import com.rodriguezlazo.tasksmanager.dtos.NewTaskLabelDTO;
 import com.rodriguezlazo.tasksmanager.entities.Category;
 import com.rodriguezlazo.tasksmanager.entities.TaskLabel;
@@ -42,5 +43,14 @@ public class TaskLabelServiceImpl implements TaskLabelService {
     @Override
     public TaskLabel findOneByName(String name) {
         return repository.findOneByName(name);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public TaskLabel modifyById(ModifyTaskLabelDTO modifyTaskLabelDTO) {
+        Optional<TaskLabel> label;
+        label= repository.findById(modifyTaskLabelDTO.getLabel_id());
+        label.get().setName(modifyTaskLabelDTO.getName());
+        return repository.save(label.get());
     }
 }
